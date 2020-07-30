@@ -15,6 +15,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using SocialApp.API.Data;
+using System.Net;
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Http;
+using SocialApp.API.Helpers;
 
 namespace SocialApp.API
 {
@@ -52,6 +56,20 @@ namespace SocialApp.API
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+            }
+            else{ //Global level exception handler so that no need to right try catch in application
+                app.UseExceptionHandler(builder =>{
+                    builder.Run(async context => {
+                        context.Response.StatusCode=(int)HttpStatusCode.InternalServerError;
+
+                        var error=context.Features.Get<IExceptionHandlerFeature>();
+                        if(error !=null)
+                        {
+                            context.Response.AddApplicationError(error.Error.Message);
+                            await context.Response.WriteAsync(error.Error.Message);
+                        }
+                    });
+                });
             }
     
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());

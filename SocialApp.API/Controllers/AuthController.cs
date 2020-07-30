@@ -51,7 +51,7 @@ namespace SocialApp.API.Controllers
 
             if (userFromRepo == null)
                 return Unauthorized();
-            
+
             //return token to client
             var claims = new[]
             {
@@ -60,29 +60,30 @@ namespace SocialApp.API.Controllers
             };
 
             //server needs to sign the token that it is valid retun
-            
+
             //Here creating a security key
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetSection("AppSettings:Token").Value));
 
             //using key as a part of signing credential and encrypting the key with hashing algo
-            var creds=new SigningCredentials(key,SecurityAlgorithms.HmacSha512Signature);
-            
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+
             //Creating Token
-            var tokenDescriptor=new SecurityTokenDescriptor()
+            var tokenDescriptor = new SecurityTokenDescriptor()
             {
-                Subject=new ClaimsIdentity(claims),
-                Expires=DateTime.Now.AddDays(1),
-                SigningCredentials=creds
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
             };
 
             //Using JWT which will allow us to create the token based on token discreptor
-            var tokenHandler =new JwtSecurityTokenHandler();
-            var token=tokenHandler.CreateToken(tokenDescriptor);
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
 
             //write the token into response
-            return Ok(new{
-                token=tokenHandler.WriteToken(token)
-            });
+            return Ok(new
+            {
+                token = tokenHandler.WriteToken(token)
+            });      
         }
     }
 }
