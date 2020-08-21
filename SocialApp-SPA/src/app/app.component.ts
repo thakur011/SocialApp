@@ -9,7 +9,7 @@ import { AuthService } from './_services/auth.service';
 })
 export class AppComponent  implements OnInit{
   jwtHelper = new JwtHelperService();
-  
+
   constructor(private authService: AuthService){}
 
   ngOnInit(){

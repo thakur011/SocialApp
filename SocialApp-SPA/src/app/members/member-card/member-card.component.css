@@ -1,0 +1,39 @@
+/* hove on image and zoom in */
+.card:hover img{
+    transform: scale(1.2,1.2);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+    opacity: 0.7;
+}
+/* no hover image and zoom out */
+.card img{
+    transform: scale(1.0,1.0);
+    transition-duration: 500ms;
+    transition-timing-function: ease-out;
+}
+/* hover zoom in stay in img box */
+.card-img-wrapper{
+    overflow: hidden;
+    position: relative;
+}
+/* initial position on ul buttons befor hover */
+.member-icons{
+position: absolute;
+bottom:-30%;
+left: 0;
+right: 0;
+margin-right: auto;
+margin-left: auto;
+opacity: 0;
+}
+
+/* on hover display icons*/
+.card-img-wrapper:hover .member-icons{
+    bottom:0;
+    opacity: 1;
+}
+
+/* transation effect on buttons... slide up */
+.animate{
+    transition: all 0.3s ease-in-out;
+}
