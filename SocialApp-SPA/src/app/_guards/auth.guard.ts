@@ -6,6 +6,8 @@ import { AlertifyService } from '../_services/alertify.service';
 @Injectable({
   providedIn: 'root',
 })
+// CanActivate is an interface
+// prevent access to the routes url is user is not login
 export class AuthGuard implements CanActivate {
   constructor(
     private authService: AuthService,
